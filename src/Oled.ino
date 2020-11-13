@@ -25,12 +25,9 @@ void setup()
 {
   Wire.begin();
   u8g2.begin();
-  TCA9548A(0); // tell the TCA9548A we want to use I2C bus number zero (to talk to the OLED)
+  delay(2000);
+  TCA9548A(2); // tell the TCA9548A we want to use I2C bus number zero (to talk to the OLED)
   hello();     // clear the internal memory
-  TCA9548A(1);
-  hello();
-  TCA9548A(2);
-  hello();
   TCA9548A(3);
   hello();
   TCA9548A(4);
@@ -38,6 +35,8 @@ void setup()
   TCA9548A(5);
   hello();
   TCA9548A(6);
+  hello();
+  TCA9548A(7);
   hello();
 }
 
