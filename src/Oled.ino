@@ -21,12 +21,24 @@ void hello(void)
   u8g2.sendBuffer();                    // transfer internal memory to the display
 }
 
+void description(void)
+{
+  Wire.begin();
+  u8g2.begin();
+  u8g2.clearBuffer();
+  u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.drawStr(10, 10, "Infrared Temperature");
+  u8g2.drawStr(10, 30, "Sensing");
+  u8g2.drawStr(10, 50, "Platform");
+  u8g2.sendBuffer();
+}
+
 void setup()
 {
   Wire.begin();
   u8g2.begin();
-  TCA9548A(1); // tell the TCA9548A we want to use I2C bus number 1 (to talk to the OLED)
-  hello();     // clear the internal memory
+  TCA9548A(1);   // tell the TCA9548A we want to use I2C bus number 1 (to talk to the OLED)
+  description(); // clear the internal memory
   TCA9548A(2);
   hello();
   TCA9548A(3);
