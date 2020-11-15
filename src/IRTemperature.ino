@@ -9,7 +9,7 @@ U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 Adafruit_MLX90614 IR_1 = Adafruit_MLX90614(0x5A); // MLX90614 address is 0x5A
 Adafruit_MLX90614 IR_2 = Adafruit_MLX90614(0x2B); // MLX90614 address is 0x2B
 Adafruit_MLX90614 IR_3 = Adafruit_MLX90614(0x3B); // MLX90614 address is 0x3B
-double TEMP1;
+double TEMP;
 static char outstr[15];
 
 // --- Voids
@@ -20,29 +20,9 @@ void TCA9548A(uint8_t bus)
   Wire.endTransmission();
 }
 
-void temp1(void)
+void temp(Adafruit_MLX90614 sensor)
 {
-  TEMP = IR_1.readObjectTempC();                    // store temp in a double
-  u8g2.clearBuffer();                               // clear the internal memory
-  u8g2.drawStr(0, 50, dtostrf(TEMP, 5, 1, outstr)); // convert double to string
-  u8g2.drawStr(80, 50, "\xb0");                     // hex code for degrees celsius
-  u8g2.drawStr(84, 50, " C");
-  u8g2.sendBuffer(); // transfer internal memory to the display
-}
-
-void temp2(void)
-{
-  TEMP = IR_2.readObjectTempC();                    // store temp in a double
-  u8g2.clearBuffer();                               // clear the internal memory
-  u8g2.drawStr(0, 50, dtostrf(TEMP, 5, 1, outstr)); // convert double to string
-  u8g2.drawStr(80, 50, "\xb0");                     // hex code for degrees celsius
-  u8g2.drawStr(84, 50, " C");
-  u8g2.sendBuffer(); // transfer internal memory to the display
-}
-
-void temp3(void)
-{
-  TEMP = IR_3.readObjectTempC();                    // store temp in a double
+  TEMP = sensor.readObjectTempC();                  // store temp in a double
   u8g2.clearBuffer();                               // clear the internal memory
   u8g2.drawStr(0, 50, dtostrf(TEMP, 5, 1, outstr)); // convert double to string
   u8g2.drawStr(80, 50, "\xb0");                     // hex code for degrees celsius
@@ -74,10 +54,10 @@ void setup()
 void loop()
 {
   TCA9548A(1);
-  temp1();
+  temp(IR_1);
   TCA9548A(2);
-  temp2();
+  temp(IR_2);
   TCA9548A(3);
-  temp3();
+  temp(IR_3);
   delay(200);
 }
