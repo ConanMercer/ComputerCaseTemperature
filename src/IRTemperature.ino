@@ -11,6 +11,7 @@ Adafruit_MLX90614 IR_2 = Adafruit_MLX90614(0x2B); // MLX90614 address is 0x2B
 Adafruit_MLX90614 IR_3 = Adafruit_MLX90614(0x3B); // MLX90614 address is 0x3B
 double TEMP;
 static char outstr[15];
+const char *t;
 
 // --- Voids
 void TCA9548A(uint8_t bus)
@@ -20,7 +21,7 @@ void TCA9548A(uint8_t bus)
   Wire.endTransmission();
 }
 
-void temp(Adafruit_MLX90614 sensor)
+void printTemp(Adafruit_MLX90614 sensor)
 {
   TEMP = sensor.readObjectTempC();                  // store temp in a double
   u8g2.clearBuffer();                               // clear the internal memory
@@ -30,14 +31,12 @@ void temp(Adafruit_MLX90614 sensor)
   u8g2.sendBuffer(); // transfer internal memory to the display
 }
 
-void description(void)
+void printOLED(const char *t)
 {
   Wire.begin();
   u8g2.begin();
   u8g2.clearBuffer();
-  u8g2.drawStr(10, 10, "Infrared Temperature");
-  u8g2.drawStr(10, 30, "Sensing");
-  u8g2.drawStr(10, 50, "Platform");
+  u8g2.drawStr(0, 50, t);
   u8g2.sendBuffer();
 }
 
@@ -48,16 +47,23 @@ void setup()
   IR_1.begin();             // Initialise IR sensors
   IR_2.begin();
   IR_3.begin();
+  u8g2.setFont(u8g2_font_helvR18_tf); // choose a suitable font
+  TCA9548A(5);
+  printOLED("Intake");
+  TCA9548A(6);
+  printOLED("Exhaust");
+  TCA9548A(7);
+  printOLED("Exhaust");
   u8g2.setFont(u8g2_font_helvR24_tf); // choose a suitable font
 }
 
 void loop()
 {
   TCA9548A(1);
-  temp(IR_1);
+  printTemp(IR_1);
   TCA9548A(2);
-  temp(IR_2);
+  printTemp(IR_2);
   TCA9548A(3);
-  temp(IR_3);
+  printTemp(IR_3);
   delay(200);
 }
