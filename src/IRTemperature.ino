@@ -11,7 +11,6 @@ Adafruit_MLX90614 IR_2 = Adafruit_MLX90614(0x2B); // MLX90614 address is 0x2B
 Adafruit_MLX90614 IR_3 = Adafruit_MLX90614(0x3B); // MLX90614 address is 0x3B
 double TEMP;
 static char outstr[15];
-const char *t;
 
 // --- Voids
 void TCA9548A(uint8_t bus)
@@ -31,12 +30,11 @@ void printTemp(Adafruit_MLX90614 sensor)
   u8g2.sendBuffer(); // transfer internal memory to the display
 }
 
-void printOLED(const char *t)
+void printOLED(const char *t, const char *t2)
 {
-  Wire.begin();
-  u8g2.begin();
   u8g2.clearBuffer();
-  u8g2.drawStr(0, 50, t);
+  u8g2.drawStr(0, 20, t);
+  u8g2.drawStr(0, 60, t2);
   u8g2.sendBuffer();
 }
 
@@ -47,14 +45,14 @@ void setup()
   IR_1.begin();             // Initialise IR sensors
   IR_2.begin();
   IR_3.begin();
-  u8g2.setFont(u8g2_font_helvR18_tf); // choose a suitable font
+  u8g2.setFont(u8g2_font_helvR18_tf); // small font
   TCA9548A(5);
-  printOLED("Intake");
+  printOLED("Front", "Intake");
   TCA9548A(6);
-  printOLED("Exhaust");
+  printOLED("Top", "Exhaust");
   TCA9548A(7);
-  printOLED("Exhaust");
-  u8g2.setFont(u8g2_font_helvR24_tf); // choose a suitable font
+  printOLED("Rear", "Exhaust");
+  u8g2.setFont(u8g2_font_helvR24_tf); // bigger font
 }
 
 void loop()
