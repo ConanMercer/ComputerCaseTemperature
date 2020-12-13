@@ -57,11 +57,11 @@ void setup()
 
 void loop()
 {
-  // TCA9548A(1);
-  // printTemp(IR_1);
-  // TCA9548A(2);
-  // printTemp(IR_2);
-  // TCA9548A(3);
-  // printTemp(IR_3);
-  // delay(200);
+  TCA9548A(1);
+  printTemp(IR_1);
+  TCA9548A(2);
+  printTemp(IR_2);
+  TCA9548A(3);
+  printTemp(IR_3);
+  delay(200);
 }
