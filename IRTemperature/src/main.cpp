@@ -11,6 +11,7 @@ Adafruit_MLX90614 IR_2 = Adafruit_MLX90614(0x2B); // MLX90614 address is 0x2B
 Adafruit_MLX90614 IR_3 = Adafruit_MLX90614(0x3B); // MLX90614 address is 0x3B
 double TEMP;
 static char outstr[15];
+int i = 0;
 
 // --- Voids
 void TCA9548A(uint8_t bus)
@@ -22,6 +23,10 @@ void TCA9548A(uint8_t bus)
 
 void printTemp(Adafruit_MLX90614 sensor)
 {
+  if (i < 1)  
+  { 
+      u8g2.begin(); 
+  } 
   TEMP = sensor.readObjectTempC();                    // store temp in a double
   u8g2.clearBuffer();                                 // clear the internal memory
   u8g2.drawStr(0, 50, dtostrf(TEMP, 5, 1, outstr));   // convert double to string
@@ -64,4 +69,5 @@ void loop()
   printTemp(IR_2);
   TCA9548A(3);
   printTemp(IR_3);
+  i = 1;
 }
