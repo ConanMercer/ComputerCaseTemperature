@@ -22,16 +22,17 @@ void TCA9548A(uint8_t bus)
 
 void printTemp(Adafruit_MLX90614 sensor)
 {
-  TEMP = sensor.readObjectTempC();                  // store temp in a double
-  u8g2.clearBuffer();                               // clear the internal memory
-  u8g2.drawStr(0, 50, dtostrf(TEMP, 5, 1, outstr)); // convert double to string
-  u8g2.drawStr(80, 50, "\xb0");                     // hex code for degrees celsius
+  TEMP = sensor.readObjectTempC();                    // store temp in a double
+  u8g2.clearBuffer();                                 // clear the internal memory
+  u8g2.drawStr(0, 50, dtostrf(TEMP, 5, 1, outstr));   // convert double to string
+  u8g2.drawStr(80, 50, "\xb0");                       // hex code for degrees celsius
   u8g2.drawStr(84, 50, " C");
   u8g2.sendBuffer(); // transfer internal memory to the display
 }
 
 void printOLED(const char *t, const char *t2)
 {
+  u8g2.begin(); 
   u8g2.clearBuffer();
   u8g2.drawStr(0, 20, t);
   u8g2.drawStr(0, 60, t2);
@@ -63,5 +64,4 @@ void loop()
   printTemp(IR_2);
   TCA9548A(3);
   printTemp(IR_3);
-  delay(200);
 }
