@@ -6,9 +6,9 @@
 
 // --- Variables and settings
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
-Adafruit_MLX90614 IR_1 = Adafruit_MLX90614(0x5A); // MLX90614 address is 0x5A
-Adafruit_MLX90614 IR_2 = Adafruit_MLX90614(0x2B); // MLX90614 address is 0x2B
-Adafruit_MLX90614 IR_3 = Adafruit_MLX90614(0x3B); // MLX90614 address is 0x3B
+Adafruit_MLX90614 IR_1 = Adafruit_MLX90614(0x5A); // MLX90614 address is 0x5A, Top Exhaust
+Adafruit_MLX90614 IR_2 = Adafruit_MLX90614(0x2B); // MLX90614 address is 0x2B, Front Intake
+Adafruit_MLX90614 IR_3 = Adafruit_MLX90614(0x3B); // MLX90614 address is 0x3B, Rear Exhaust
 double TEMP;
 static char outstr[15];
 int i = 0;
@@ -64,10 +64,10 @@ void setup()
 void loop()
 {
   TCA9548A(1);
-  printTemp(IR_1);
-  TCA9548A(2);
   printTemp(IR_2);
-  TCA9548A(3);
+  TCA9548A(2);
   printTemp(IR_3);
+  TCA9548A(3);
+  printTemp(IR_1);
   i = 1;
 }
